@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Heart Rate Monitor</title>
+</head>
+<body>
+  <h1>Heart Rate Monitor</h1>
+  <img src="{{ url_for('video_feed') }}">
+  <br>
+  <form method="POST" action="/requests">
+    <input type="submit" name="reset" value="Reset">
+    <input type="submit" name="start" value="Start/Stop">
+    <!-- <input type="submit" name="get_heart_rate" value="Get Heart Rate"> -->
+  </form>
+  <br>
+  <div id="heart_rate">Heart Rate: --</div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Poll for heart rate updates every 1 second
+      setInterval(function() {
+        $.get('/heart_rate', function(data) {
+            // if (data.bpm > 0) {
+            //   $('#heart_rate').text('Heart Rate: ' + data.bpm);
+            // }
+            $('#heart_rate').text('Heart Rate: ' + data.bpm);
+        });
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
